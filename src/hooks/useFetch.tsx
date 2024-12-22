@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const URL = "https://jsonplaceholder.typicode.com";
 
-const useFetch = (endpoint: string) => {
+export const useFetch = (endpoint: string) => {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
@@ -23,5 +23,3 @@ const useFetch = (endpoint: string) => {
 	}, [endpoint]);
 	return { data, loading, error };
 };
-
-export default useFetch;

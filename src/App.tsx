@@ -1,9 +1,11 @@
-import useFetch from "./hooks/useFetch";
+import PostList from "./components/PostList";
 
 function App() {
-	const { data, loading, error } = useFetch("posts");
-	console.log(data);
-	return <h1>Hello World</h1>;
+	return (
+		<div>
+			<PostList />
+		</div>
+	);
 }
 
 export default App;
