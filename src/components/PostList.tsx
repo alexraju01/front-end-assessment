@@ -8,8 +8,9 @@ const PostList = () => {
 
 	return (
 		<div>
+			<h1 className='title'>List of Tasks</h1>
 			{data?.map((post) => (
-				<ul key={post.id}>
+				<ul key={post.id} className='post-list'>
 					<li>{post.title}</li>
 				</ul>
 			))}
