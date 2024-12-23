@@ -17,6 +17,11 @@ body {
 	margin: 2rem 0;
 }
 
+.list-heading {
+	display: flex;
+	justify-content: space-between;
+}
+
 .post-list {
 	margin-bottom: 0.65rem;
 	font-size: 1rem;
@@ -36,7 +41,8 @@ body {
 
 .post-list li div {
 	display: flex;
-	gap: 2rem;
+	justify-content: space-between;
+	/* gap: 2rem; */
 	padding: 0 0.5rem;
 	/* flex-direction: column; */
 }
@@ -47,7 +53,7 @@ body {
 	text-overflow: ellipsis;
 	display: block;
 	margin: 0; /* Remove default margin for better alignment */
-	max-width: 100%; /* Ensure it fits within the container */
+	max-width: 70%; /* Ensure it fits within the container */
 }
 
 .post-list:hover {
