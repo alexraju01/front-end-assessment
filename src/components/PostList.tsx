@@ -1,5 +1,6 @@
 // import { useFetch } from "../hooks/useFetch";
 import { useFetchPostsQuery, useFetchTodosQuery } from "../services/posts";
+import { Post } from "../types/posts";
 
 const PostList = () => {
 	// const { data, error, loading } = useFetch("posts");
@@ -12,6 +13,7 @@ const PostList = () => {
 	const combinedData = posts?.map((post: { id: number; userId: number; title: string }) => {
 		const todo = todos?.find((todo: { id: number }) => todo.id === post.id);
 		return {
+			id: post.id,
 			userId: post.userId,
 			title: post.title,
 			completed: todo?.completed ?? false, // Default to false if no matching todo
