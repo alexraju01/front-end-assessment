@@ -1,6 +1,7 @@
 // import { useFetch } from "../hooks/useFetch";
 import { useFetchPostsQuery, useFetchTodosQuery } from "../services/posts";
 import { Post } from "../types/posts";
+import Button from "./Button";
 
 const PostList = () => {
 	// const { data, error, loading } = useFetch("posts");
@@ -22,7 +23,9 @@ const PostList = () => {
 
 	return (
 		<div>
-			<h1 className='title'>List of Tasks</h1>
+			<h1 className='title '>List of Tasks</h1>
+
+			<Button className='btnAddPost'>+ Add</Button>
 
 			<section>
 				<div className='list-heading'>
