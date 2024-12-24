@@ -1,6 +1,7 @@
 // import { useFetch } from "../hooks/useFetch";
 import { useFetchPostsQuery, useFetchTodosQuery } from "../services/posts";
 import { Post } from "../types/posts";
+import AddPostForm from "./AddPostForm";
 import Button from "./Button";
 
 const PostList = () => {
@@ -27,6 +28,7 @@ const PostList = () => {
 
 			<Button className='btnAddPost'>+ Add</Button>
 
+			<AddPostForm onAddPost={"hello"} />
 			<section>
 				<div className='list-heading'>
 					<p>User ID</p>

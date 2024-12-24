@@ -20,7 +20,7 @@ body {
 .btnAddPost {
 	width: fit-content;
 	margin-bottom: 2rem;
-	margin-left: 85%;
+	margin-left: calc(100% - 59px);
 	border-radius: 0.375rem;
 	background-color: white;
 	padding: 0.25rem 0.7rem;
