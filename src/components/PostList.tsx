@@ -1,26 +1,57 @@
 // import { useFetch } from "../hooks/useFetch";
-import { useFetchPostsQuery, useFetchTodosQuery } from "../services/posts";
+import { useEffect, useState } from "react";
+import { useCreatePostMutation, useFetchPostsQuery, useFetchTodosQuery } from "../services/posts";
 import { Post } from "../types/posts";
 import AddPostForm from "./AddPostForm";
 import Button from "./Button";
+
+interface CombinedData {
+	id: number;
+	userId: number;
+	title: string;
+	completed: boolean;
+}
 
 const PostList = () => {
 	// const { data, error, loading } = useFetch("posts");
 	const { data: posts, isLoading: postsLoading, error: postsError } = useFetchPostsQuery();
 	const { data: todos, isLoading: todosLoading, error: todosError } = useFetchTodosQuery();
 
+	const [combinedData, setCombinedData] = useState<CombinedData[]>([]);
+	const [createPost] = useCreatePostMutation();
+
+	useEffect(() => {
+		if (posts && todos) {
+			const data = posts.map((post: { id: number; userId: number; title: string }) => {
+				const todo = todos.find((todo: { id: number }) => todo.id === post.id);
+				return {
+					id: post.id,
+					userId: post.userId,
+					title: post.title,
+					completed: todo?.completed ?? false,
+				};
+			});
+			setCombinedData(data);
+		}
+	}, [posts, todos]);
+
 	if (postsLoading || todosLoading) return <p>Loading...</p>;
 	if (postsError || todosError) return <p>Error fetching data</p>;
 
-	const combinedData = posts?.map((post: { id: number; userId: number; title: string }) => {
-		const todo = todos?.find((todo: { id: number }) => todo.id === post.id);
-		return {
-			id: post.id,
-			userId: post.userId,
-			title: post.title,
-			completed: todo?.completed ?? false, // Default to false if no matching todo
-		};
-	});
+	const handleAddPost = async (newPost: { userId: number; title: string }) => {
+		try {
+			const savedPost = await createPost(newPost).unwrap();
+			const newPostData: CombinedData = {
+				id: savedPost.id, // Use the ID from the API response
+				userId: savedPost.userId,
+				title: savedPost.title,
+				completed: false,
+			};
+			setCombinedData((prevData) => [...prevData, newPostData]);
+		} catch (error) {
+			console.error("Error occurred while adding a post:", error);
+		}
+	};
 
 	return (
 		<div>
@@ -28,7 +59,7 @@ const PostList = () => {
 
 			<Button className='btnAddPost'>+ Add</Button>
 
-			<AddPostForm onAddPost={"hello"} />
+			<AddPostForm onAddPost={handleAddPost} />
 			<section>
 				<div className='list-heading'>
 					<p>User ID</p>

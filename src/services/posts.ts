@@ -12,7 +12,14 @@ export const postsApi = createApi({
 		fetchTodos: builder.query<Todos[], void>({
 			query: () => "/todos",
 		}),
+		createPost: builder.mutation<Post, Partial<Post>>({
+			query: (newPost) => ({
+				url: "/posts",
+				method: "POST",
+				body: newPost,
+			}),
+		}),
 	}),
 });
 
-export const { useFetchPostsQuery, useFetchTodosQuery } = postsApi;
+export const { useFetchPostsQuery, useFetchTodosQuery, useCreatePostMutation } = postsApi;

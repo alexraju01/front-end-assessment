@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 
 interface AddPostFormProps {
@@ -15,21 +15,17 @@ const AddPostForm = ({ onAddPost }: AddPostFormProps) => {
 
 	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-
-		onAddPost({
-			userId: parseInt(newPost.userId, 10),
-			title: newPost.title,
-		});
-
-		setNewPost({ userId: "", title: "" });
+		if (newPost.userId && newPost.title) {
+			onAddPost({ userId: parseInt(newPost.userId, 10), title: newPost.title });
+			setNewPost({ userId: "", title: "" });
+		}
 	};
 
 	return (
 		<form onSubmit={handleFormSubmit} className='add-post-form'>
 			<div>
-				<label htmlFor='userId'>User ID:</label>
+				<label>User ID:</label>
 				<input
-					id='userId'
 					type='number'
 					name='userId'
 					value={newPost.userId}
@@ -38,9 +34,8 @@ const AddPostForm = ({ onAddPost }: AddPostFormProps) => {
 				/>
 			</div>
 			<div>
-				<label htmlFor='title'>Title:</label>
+				<label>Title:</label>
 				<input
-					id='title'
 					type='text'
 					name='title'
 					value={newPost.title}
