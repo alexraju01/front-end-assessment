@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Button from "./Button";
 
 interface AddPostFormProps {
-	onAddPost: any;
+	onAddPost: (post: { userId: number; title: string }) => void;
 }
 
-const AddPostForm: React.FC<AddPostFormProps> = ({ onAddPost }) => {
+const AddPostForm = ({ onAddPost }: AddPostFormProps) => {
 	const [newPost, setNewPost] = useState({ userId: "", title: "" });
 
 	const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +27,9 @@ const AddPostForm: React.FC<AddPostFormProps> = ({ onAddPost }) => {
 	return (
 		<form onSubmit={handleFormSubmit} className='add-post-form'>
 			<div>
-				<label>User ID:</label>
+				<label htmlFor='userId'>User ID:</label>
 				<input
+					id='userId'
 					type='number'
 					name='userId'
 					value={newPost.userId}
@@ -37,8 +38,9 @@ const AddPostForm: React.FC<AddPostFormProps> = ({ onAddPost }) => {
 				/>
 			</div>
 			<div>
-				<label>Title:</label>
+				<label htmlFor='title'>Title:</label>
 				<input
+					id='title'
 					type='text'
 					name='title'
 					value={newPost.title}
