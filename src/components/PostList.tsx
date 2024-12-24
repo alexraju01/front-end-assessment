@@ -21,6 +21,7 @@ const PostList = () => {
 	const [createPost] = useCreatePostMutation();
 
 	const [successMessage, setSuccessMessage] = useState<string | null>(null);
+	const [isFormVisible, setFormVisible] = useState(false); // Track form visibility
 
 	useEffect(() => {
 		if (posts && todos) {
@@ -52,6 +53,7 @@ const PostList = () => {
 			setCombinedData((prevData) => [...prevData, newPostData]);
 			setSuccessMessage("You have successfully added a new post!");
 			setTimeout(() => setSuccessMessage(null), 3000); // Hide message after 3 seconds
+			setFormVisible(false); // Hide the form after submission
 		} catch (error) {
 			console.error("Error occurred while adding a post:", error);
 		}
@@ -62,9 +64,11 @@ const PostList = () => {
 			<h1 className='title '>List of Tasks</h1>
 
 			{successMessage && <div className='success-message'>{successMessage}</div>}
-			<Button className='btnAddPost'>+ Add</Button>
+			<Button className='btnAddPost' onClick={() => setFormVisible(true)}>
+				+ Add
+			</Button>
 
-			<AddPostForm onAddPost={handleAddPost} />
+			{isFormVisible && <AddPostForm onAddPost={handleAddPost} />}
 			<section>
 				<div className='list-heading'>
 					<p>User ID</p>
