@@ -20,6 +20,8 @@ const PostList = () => {
 	const [combinedData, setCombinedData] = useState<CombinedData[]>([]);
 	const [createPost] = useCreatePostMutation();
 
+	const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
 	useEffect(() => {
 		if (posts && todos) {
 			const data = posts.map((post: { id: number; userId: number; title: string }) => {
@@ -48,6 +50,8 @@ const PostList = () => {
 				completed: false,
 			};
 			setCombinedData((prevData) => [...prevData, newPostData]);
+			setSuccessMessage("You have successfully added a new post!");
+			setTimeout(() => setSuccessMessage(null), 3000); // Hide message after 3 seconds
 		} catch (error) {
 			console.error("Error occurred while adding a post:", error);
 		}
@@ -57,6 +61,7 @@ const PostList = () => {
 		<div>
 			<h1 className='title '>List of Tasks</h1>
 
+			{successMessage && <div className='success-message'>{successMessage}</div>}
 			<Button className='btnAddPost'>+ Add</Button>
 
 			<AddPostForm onAddPost={handleAddPost} />
